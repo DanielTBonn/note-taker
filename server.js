@@ -34,11 +34,12 @@ app.get('/api/notes', (req, res) => {
 // commits post valid POST requests to our db.json
 app.post('api/notes', (req, res) => {
 
+    console.log("You're in the posting stage")
 
-    // const newNote = {
-    //     name: '',
-    //     note: '',
-    // };
+    const newNote = {
+        title: 'Sample',
+        text: 'Sample',
+    };
     if (true) {
         fs.readFile(db, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];
@@ -47,8 +48,7 @@ app.post('api/notes', (req, res) => {
             fs.writeFile(db, JSON.stringify(oldNotes), (err) =>
             err
             ? console.error(err)
-            : console.log(
-                `A note for ${newNote.name} has been written to JSON file`)
+            : console.log(`A note for ${newNote.name} has been written to JSON file`)
                 );
         });
 
