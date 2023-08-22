@@ -45,11 +45,11 @@ app.post('api/notes', (req, res) => {
             const oldNotes = (data && JSON.parse(data)) || [];
             oldNotes.push(newNote);
 
-            fs.writeFile(db, JSON.stringify(oldNotes), (err) =>
+            fs.writeFile(db, JSON.stringify(oldNotes), (err) => {
             err
             ? console.error(err)
-            : console.log(`A note for ${newNote.name} has been written to JSON file`)
-                );
+            : console.log(`A note for ${newNote.title} has been written to JSON file`);
+            });
         });
 
         const response = {
