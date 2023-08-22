@@ -35,11 +35,11 @@ app.get('/api/notes', (req, res) => {
 app.post('api/notes', (req, res) => {
 
 
-    const newNote = {
-        name: '',
-        note: '',
-    };
-    if (newNote) {
+    // const newNote = {
+    //     name: '',
+    //     note: '',
+    // };
+    if (true) {
         fs.readFile(db, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];
             oldNotes.push(newNote);
