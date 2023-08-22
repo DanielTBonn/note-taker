@@ -34,6 +34,8 @@ app.get('/api/notes', (req, res) => {
 // commits post valid POST requests to our db.json
 app.post('api/notes', (req, res) => {
 
+    console.log(`${req.method} request recieved to add info`)
+
     console.log("You're in the posting stage")
 
     const newNote = {
