@@ -19,16 +19,52 @@ app.use(express.static('public'));
 // the / route routes to public/index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
-})
+});
 
 // the /notes route routes to public/notes.html
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
-})
+});
 
+// sets our db.json to the url path /api/notes
 app.get('/api/notes', (req, res) => {
     res.json(db);
-})
+});
+
+// commits post valid POST requests to our db.json
+app.post('api/notes', (req, res) => {
+
+
+    const newNote = {
+        name: '',
+        note: '',
+    };
+    if (newNote) {
+        fs.readFile(db, (err, data) => {
+            const oldNotes = (data && JSON.parse(data)) || [];
+            oldNotes.push(newNote);
+
+            fs.writeFile(db, JSON.stringify(oldNotes), (err) =>
+            err
+            ? console.error(err)
+            : console.log(
+                `A note for ${newNote.name} has been written to JSON file`)
+                );
+        });
+
+        const response = {
+            status: 'success',
+            body: newNote,
+        };
+
+        console.log(response);
+        res.status(201).json(response);
+  } else {
+    res.status(500).json('Error in posting review');
+  }
+
+});
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port http://localhost:${PORT}`);
