@@ -1,8 +1,8 @@
 // essential variables for running our server and keeping track of data in a data base
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const fs = require('fs');
-const db = require('./db/db.json')
+const db = require('./db/db.json');
 
 const PORT = 3001;
 
@@ -28,26 +28,27 @@ app.get('/notes', (req, res) => {
 
 // sets our db.json to the url path /api/notes
 app.get('/api/notes', (req, res) => {
-    res.json(db);
+    console.info(`GET /api/notes`)
+    res.status(200).json(db);
 });
 
 // commits post valid POST requests to our db.json
-app.post('api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
 
-    console.log(`${req.method} request recieved to add info`)
+    console.info(`${req.method} request recieved to add info`)
 
-    console.log("You're in the posting stage")
+    console.info("You're in the posting stage")
 
     const newNote = {
         title: 'Sample',
         text: 'Sample',
     };
     if (true) {
-        fs.readFile(db, (err, data) => {
+        fs.readFile(`./db/db.json`, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];
             oldNotes.push(newNote);
 
-            fs.writeFile(db, JSON.stringify(oldNotes), (err) => {
+            fs.writeFile(`./db/db.json`, JSON.stringify(oldNotes), (err) => {
             err
             ? console.error(err)
             : console.log(`A note for ${newNote.title} has been written to JSON file`);
@@ -60,6 +61,12 @@ app.post('api/notes', (req, res) => {
         };
 
         console.log(response);
+        
+        app.get('/api/notes', (req, res) => {
+            console.info(`GET /api/notes`)
+            res.status(200).json(db);
+        });
+
         res.status(201).json(response);
   } else {
     res.status(500).json('Error in posting review');
