@@ -19,7 +19,7 @@ Clone this repository and install the express dependency.
   
 Go to the note-taker repo and enter node server.js into the CLI. On the webpage, add notes by pressing the + button and typing into the `Note Title` and `Note Text` sections, then press the save icon that appears in the top right corner next to the + button. Look at past notes by clicking on them and delete them by pressing the red trash can button to the side.
 
-[!Note-taker-application-image](/images/note-taker-img.png)
+[!Note-taker-application-image](./images/note-taker-img.png)
 
 ## Contribute
   
