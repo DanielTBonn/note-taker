@@ -1,6 +1,7 @@
 // variables that will create the route to /api/notes for using get and post methods
 const notes = require('express').Router();
 const { readFile, writeFile } = require('fs');
+const uuid = require('./uuid');
 
 // notes router
 notes.route('/')
@@ -16,6 +17,7 @@ notes.route('/')
         }
     })
     })
+
     // updates the current db.json file with a new note
     .post((req, res) => {
         console.info(`${req.method} request recieved to add info`)
@@ -30,6 +32,7 @@ notes.route('/')
             text,
         };
 
+        const file = `./db/db.json`;
         readFile(file, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];
             oldNotes.push(newNote);
@@ -51,6 +54,5 @@ notes.route('/')
         res.status(500).json('Error in posting review');
     }
 });
-
 
 module.exports = notes;

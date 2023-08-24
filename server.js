@@ -2,7 +2,6 @@
 const express = require('express');
 const path = require('path');
 const notes = require('./public/assets/js/notes') 
-const db = require('./db/db.json')
 
 const PORT = 3001;
 
@@ -27,24 +26,6 @@ app.get('/', (req, res) => {
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
-
-app.get('/api/notes/:id', (req, res) => {
-    if (req.params.review_id) {
-        console.info(`${req.method} request received to get a single a review`);
-        const id = req.params.id;
-        for (let i = 0; i < db.length; i++) {
-          const currentNote = db[i];
-          if (currentNote.id === id) {
-            res.status(200).json(currentReview);
-            return;
-          }
-        }
-        res.status(404).send('Review not found');
-      } else {
-        res.status(400).send('Review ID not provided');
-      }
-});
-
 
 // sets the server to output the application to a local port
 app.listen(PORT, () => {
