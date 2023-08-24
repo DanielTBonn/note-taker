@@ -1,10 +1,6 @@
 // variables that will create the route to /api/notes for using get and post methods
 const notes = require('express').Router();
 const { readFile, writeFile } = require('fs');
-const uuid = require('./uuid');
-const file = `./db/db.json`;
-
-
 
 // notes router
 notes.route('/')
@@ -32,7 +28,6 @@ notes.route('/')
         const newNote = {
             title,
             text,
-            id: uuid(),
         };
 
         readFile(file, (err, data) => {
