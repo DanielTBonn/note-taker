@@ -21,11 +21,16 @@ notes.route('/')
     .post((req, res) => {
         console.info(`${req.method} request recieved to add info`)
 
+        console.info(req.body)
+        const { title, text } = req.body;
+        
+    if (req.body) {
+        
         const newNote = {
-            title: `Sample Title`,
-            text: `Sample Text`,
+            title,
+            text,
         };
-    if (newNote.title && newNote.text) {
+
         const file = `./db/db.json`;
         readFile(file, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];

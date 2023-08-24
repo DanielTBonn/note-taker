@@ -10,5 +10,13 @@
     {
         "title": "Sample Title",
         "text": "Sample Text"
+    },
+    {
+        "title": "Sample Title",
+        "text": "Sample Text"
+    },
+    {
+        "title": "Delete",
+        "text": "Delete this note"
     }
 ]
