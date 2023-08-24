@@ -1,8 +1,6 @@
 // essential variables for running our server and keeping track of data in a data base
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-const db = require('./db/db.json');
 const notes = require('./public/assets/js/notes') 
 
 const PORT = 3001;

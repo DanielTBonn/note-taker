@@ -1,11 +1,13 @@
+// variables that will create the route to /api/notes for using get and post methods
 const notes = require('express').Router();
 const { readFile, writeFile } = require('fs');
 
-    
+// notes router
 notes.route('/')
+    // reads the current file db.json
     .get((req, res) => {
-    console.info(`GET /api/notes`)
-    readFile('./db/db.json', 'utf8', (err, data) => {
+        console.info(`GET /api/notes`)
+        readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
             console.log(err);
         } else {
@@ -13,22 +15,23 @@ notes.route('/')
             res.json(parsedNotes);
         }
     })
-})
+    })
+
+    // updates the current db.json file with a new note
     .post((req, res) => {
-    
-    console.info(`${req.method} request recieved to add info`)
-    
-    const newNote = {
-        title: `Sample Title`,
-        text: `Sample Text`,
-    };
+        console.info(`${req.method} request recieved to add info`)
+
+        const newNote = {
+            title: `Sample Title`,
+            text: `Sample Text`,
+        };
     if (newNote.title && newNote.text) {
         const file = `./db/db.json`;
         readFile(file, (err, data) => {
             const oldNotes = (data && JSON.parse(data)) || [];
             oldNotes.push(newNote);
             
-            writeFile(file, JSON.stringify(oldNotes), (err) => {
+            writeFile(file, JSON.stringify(oldNotes, null, 4), (err) => {
                 err ? console.error(err) : console.log(`A note for ${newNote.title} has been written to JSON file`);
             });
         });
