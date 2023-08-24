@@ -1,8 +1,8 @@
 // essential variables for running our server and keeping track of data in a data base
 const express = require('express');
-const path = require('path')
+const path = require('path');
+const notes = require('./public/assets/js/notes'); 
 const fs = require('fs');
-const db = require('./db/db.json')
 
 const PORT = 3001;
 
@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // uses static files from the public directory
 app.use(express.static('public'));
+// sets the path for the notes objects added to db.json
+app.use('/api/notes', notes)
 
 // the / route routes to public/index.html
 app.get('/', (req, res) => {
@@ -26,46 +28,8 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-// sets our db.json to the url path /api/notes
-app.get('/api/notes', (req, res) => {
-    res.json(db);
-});
 
-// commits post valid POST requests to our db.json
-app.post('api/notes', (req, res) => {
-
-
-    const newNote = {
-        name: '',
-        note: '',
-    };
-    if (newNote) {
-        fs.readFile(db, (err, data) => {
-            const oldNotes = (data && JSON.parse(data)) || [];
-            oldNotes.push(newNote);
-
-            fs.writeFile(db, JSON.stringify(oldNotes), (err) =>
-            err
-            ? console.error(err)
-            : console.log(
-                `A note for ${newNote.name} has been written to JSON file`)
-                );
-        });
-
-        const response = {
-            status: 'success',
-            body: newNote,
-        };
-
-        console.log(response);
-        res.status(201).json(response);
-  } else {
-    res.status(500).json('Error in posting review');
-  }
-
-});
-
-
+// sets the server to output the application to a local port
 app.listen(PORT, () => {
     console.log(`Listening on port http://localhost:${PORT}`);
 })
